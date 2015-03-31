@@ -39,6 +39,7 @@ page.open(url_1, function(status) {
           page.evaluate(function() {
             window.history.back()
             window.history.back()
+            window.history.back()
           })
           setTimeout(function(){
             console.log('1111:'+page.url,page.canGoBack)
