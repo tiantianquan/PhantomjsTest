@@ -1,10 +1,16 @@
 var page = require('webpage').create()
 
+page.settings.userAgent = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36'
 page.addCookie({
   'name': 'JSESSIONID',
-  'value': 'A82481C6D84CADF1C513A77518B83C25',
+  'value': '5415F18A32D729D9159486EA5AAB9D00',
   'domain': '58.30.229.122'
-});
+  // 'path': '/motor',
+  // 'httponly': false,
+  // 'secure': false,
+  // 'expires': (new Date()).getTime() + (1000 * 60 * 60),
+})
+
 
 page.onResourceRequested = function(request) {};
 
@@ -13,9 +19,9 @@ page.onResourceReceived = function(response) {
 };
 
 
-
 page.open('http://58.30.229.122:8080/motor/car/car-declare-step1!input.action', function(status) {
   console.log(status)
+  page.render('ee.png')
   if (status === "success") {
     var a = page.evaluate(function() {
 
@@ -23,7 +29,7 @@ page.open('http://58.30.229.122:8080/motor/car/car-declare-step1!input.action', 
 
       $('#RadioGroup1_1').attr('checked', true)
       $('#car').val(carName)
-      formSubmit()
+      $('#inputform').submit()
     });
 
     // page.onUrlChanged = function(targetUrl) {
@@ -63,11 +69,11 @@ page.onUrlChanged = function(targetUrl) {
           console.log(addUrl[1])
 
           setTimeout(function() {
-            page.open('http://58.30.229.122:8080'+addUrl[1], function(status) {
+            page.open('http://58.30.229.122:8080' + addUrl[1], function(status) {
               console.log(status, page.url)
               page.evaluate(function() {
                 for (var i = 0; i < 3; i++) {
-                  $('[name="dataList['+i+'].value"]').val(111)
+                  $('[name="dataList[' + i + '].value"]').val(111)
                   $("#inputForm").submit()
                 }
               })
@@ -105,7 +111,7 @@ testFun.pagefill31 = function() {
   nextStep()
 }
 
-test.pagefill32 = function() {
+testFun.pagefill32 = function() {
   var addnew_1 = $('.addnew')
   var url_1 = addnew_1[0].onclick.toString().split('\'')
   return url_1
