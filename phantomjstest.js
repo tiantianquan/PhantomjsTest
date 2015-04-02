@@ -1,16 +1,21 @@
 var page = require('webpage').create()
 
 page.settings.userAgent = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36'
-page.addCookie({
+
+phantom.addCookie({
   'name': 'JSESSIONID',
-  'value': '5415F18A32D729D9159486EA5AAB9D00',
-  'domain': '58.30.229.122'
-  // 'path': '/motor',
+  'value': '647B6B722B7842B3B632C503C4B8A372',
+  'domain': '58.30.229.122',
+  'path': '/motor',
   // 'httponly': false,
   // 'secure': false,
   // 'expires': (new Date()).getTime() + (1000 * 60 * 60),
 })
 
+page.viewportSize = {
+  width: 1920,
+  height: 1080
+}
 
 page.onResourceRequested = function(request) {};
 
@@ -20,17 +25,22 @@ page.onResourceReceived = function(response) {
 
 
 page.open('http://58.30.229.122:8080/motor/car/car-declare-step1!input.action', function(status) {
-  console.log(status)
-  page.render('ee.png')
+  console.log(status, page.settings.userAgent)
+  page.render('test1.png')
   if (status === "success") {
     var a = page.evaluate(function() {
-
       var carName = Math.round(Math.random() * 1000)
 
       $('#RadioGroup1_1').attr('checked', true)
       $('#car').val(carName)
-      $('#inputform').submit()
+
     });
+    page.render('test2.png')
+    page.evaluate(function() {
+      $('#inputform').submit()
+    })
+
+
 
     // page.onUrlChanged = function(targetUrl) {
     //   setTimeout(function() {
